@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Loader = styled.div`
-    margin: 40px auto 20px auto;
+    margin: 40px auto 30px auto;
     width: 70px;
     text-align: center;
 

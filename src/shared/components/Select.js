@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setInitialSources } from '../store/actions/sourcesActions';
 import Loader from '../common/loader';
+import SelectBox from './SelectBox';
 
 class Select extends React.PureComponent {
     componentDidMount() {
@@ -11,8 +12,17 @@ class Select extends React.PureComponent {
         }
     }
 
+    renderBoxes = () => this.props.sources.map((source, index) => (
+        <SelectBox
+            name={source.name}
+            caffeine={source.caffeine_per_serving}
+            dark={index%2!==0}
+            key={index}
+        />
+    ));
+
     render() {
-        return null;
+        return this.renderBoxes();
     }
 }
 
