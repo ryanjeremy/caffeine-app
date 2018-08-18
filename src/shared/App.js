@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { setInitialSources } from './store/actions/sourcesActions';
 import styled, { injectGlobal } from 'styled-components';
 import { Container } from 'reactstrap';
@@ -51,6 +51,8 @@ const Panel = styled.div`
     }
 `;
 
+const Redirect404 = () => <Redirect to="/" />;
+
 class App extends React.Component {
     componentDidMount() {
         if (this.props.sources.length === 0) {
@@ -88,7 +90,7 @@ class App extends React.Component {
                                 linkAction={this.reload}
                             />
                         : (
-                            <>
+                            <Switch>
                                 <Route
                                     path="/"
                                     component={List}
@@ -100,7 +102,9 @@ class App extends React.Component {
                                     component={List}
                                     exact
                                 />
-                            </>
+
+                                <Route component={Redirect404} />
+                            </Switch>
                         )}
                     </Panel>
                 </Container>
