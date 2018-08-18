@@ -2,13 +2,13 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { setInitialSources } from './store/actions/sourcesActions';
 import styled, { injectGlobal } from 'styled-components';
 import { Container } from 'reactstrap';
 import Loader from './common/loader';
 import Error from './common/error';
-import Select from './components/Select';
+import List from './components/List';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './style/fonts.css';
@@ -24,6 +24,7 @@ const baseStyles = () => injectGlobal`
     }
     p {
         letter-spacing: 1px;
+        font-size: 14px;
     }
     a {
         color: rgb(32, 185, 214);
@@ -42,12 +43,15 @@ const Panel = styled.div`
     width: 100%;
     margin: 50px 0;
 
+    hr {
+        margin-bottom: 0;
+    }
     .top {
         padding: 25px 25px 0 25px;
     }
 `;
 
-class App extends React.PureComponent {
+class App extends React.Component {
     componentDidMount() {
         if (this.props.sources.length === 0) {
             this.props.setInitialSources();
@@ -68,7 +72,11 @@ class App extends React.PureComponent {
                     <Panel>
                         <div className="top">
                             <h1>Caffeine <i className="fa fa-coffee" /></h1>
-                            <h4>It can be your maker <i className="fa fa-magic" /> or your breaker <i className="fa fa-flash" /></h4>
+                            <p>
+                                {`Use this tool to determin whether you're consuming safe levels of caffeine. Simply select your
+                                preferred beverage from the list below, tell us how much you'd like, and voilà! We'll give you an
+                                idea of how much more you can safely consume.`}
+                            </p>
                             <hr />
                         </div>
                         {this.props.loading ?
@@ -83,7 +91,13 @@ class App extends React.PureComponent {
                             <>
                                 <Route
                                     path="/"
-                                    component={Select}
+                                    component={List}
+                                    exact
+                                />
+
+                                <Route
+                                    path="/beverage/:id"
+                                    component={List}
                                     exact
                                 />
                             </>
@@ -112,4 +126,4 @@ const mapDispatchToProps = {
     setInitialSources,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

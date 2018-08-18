@@ -1,7 +1,7 @@
-import { fetchSources } from '../db/dbFunc';
+import { fetchSources, insertInput, getAverageServings } from '../db/dbFunc';
 import { dispatchMessage, dispatchError } from './api';
 
-export default (action, res) => {
+export default (action, req, res) => {
     switch (action) {
         case "get":
             fetchSources()

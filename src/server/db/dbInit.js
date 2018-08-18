@@ -10,18 +10,16 @@ export default (onError, onComplete) => {
             connection.query(
                 'CREATE TABLE `' +
                     process.env.DB_NAME +
-                    '`.`sources` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(50) NOT NULL , `servings` TINYINT NOT NULL , `caffeine_per_serving` SMALLINT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+                    '`.`sources` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(50) NOT NULL , `type` VARCHAR(15) NOT NULL , `servings` TINYINT NOT NULL , `caffeine_per_serving` SMALLINT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;',
                 (tableError) => {
                     if (tableError) {
                         onError(tableError);
                     } else {
                         connection.query(
-                            'INSERT INTO `caffeine`.`sources` (`id`, `name`, `servings`, `caffeine_per_serving`) VALUES ' +
+                            'INSERT INTO `caffeine`.`sources` (`id`, `name`, `type`, `servings`, `caffeine_per_serving`) VALUES ' +
                                 config.SOURCES.map(
                                     (source) =>
-                                        `(NULL, '${source.name}', '${source.servings}', '${
-                                            source.caffeine
-                                        }')`
+                                        `(NULL, '${source.name}', '${source.type}', '${source.servings}', '${source.caffeine}')`
                                 ),
                             (insertError) => {
                                 if (insertError) {

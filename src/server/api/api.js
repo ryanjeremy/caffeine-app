@@ -16,7 +16,7 @@ export default (req, res) => {
     const action = req.params.action;
     switch (resource) {
         case "sources":
-            SourcesApi(action, res);
+            SourcesApi(action, req, res);
             return;
     }
     dispatchError(res, "Invalid resource.");
