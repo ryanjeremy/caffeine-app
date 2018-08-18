@@ -17,7 +17,7 @@ const generateStaticHTML = async () => {
         ignore: ['*'],
     });
 
-    script.on('start', async () => {
+    /*script.on('start', async () => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(`http://localhost:${process.env.PORT}`);
@@ -25,7 +25,7 @@ const generateStaticHTML = async () => {
         fs.writeFileSync(`${paths.clientBuild}/index.html`, pageContent);
         await browser.close();
         process.exit();
-    });
+    });*/
 
     script.on('quit', () => {
         process.exit();
