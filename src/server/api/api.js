@@ -12,18 +12,12 @@ export const dispatchMessage = (res, message) =>
     dispatchResponse(res, 200, message);
 
 export default (req, res, db) => {
-    db.getConnection((error, connection) => {
-        if (error) {
-            dispatchError(res, "Error with API connection.");
-        } else {
-            const resource = req.params.resource;
-            const action = req.params.action;
-            switch (resource) {
-                case "sources":
-                    SourcesApi(action, req, res, connection);
-                    return;
-            }
-            dispatchError(res, "Invalid resource.");
-        }
-    });
+    const resource = req.params.resource;
+    const action = req.params.action;
+    switch (resource) {
+        case "sources":
+            SourcesApi(action, req, res, db);
+            return;
+    }
+    dispatchError(res, "Invalid resource.");
 };
