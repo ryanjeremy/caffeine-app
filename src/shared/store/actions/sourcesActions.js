@@ -11,7 +11,7 @@ export const setInitialSources = () => {
                 dispatch(setLoading(false));
             })
             .catch(() => {
-                dispatch(setError(true, 'Network error!'));
+                dispatch(setError('Network error!', false));
             });
     }
 };

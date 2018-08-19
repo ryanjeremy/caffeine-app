@@ -13,6 +13,8 @@ import api from './api/api';
 
 require('dotenv').config();
 
+const connectionPool = db();
+const apiFunc = (req, res) => api(req, res, connectionPool);
 const app = express();
 
 app.use(paths.publicPath, express.static(path.join(paths.clientBuild, paths.publicPath)));
@@ -24,8 +26,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.route('/api/:resource/:action')
-  .get(api)
-  .post(api);
+  .get(apiFunc)
+  .post(apiFunc);
 
 app.use((req, res, next) => {
     req.store = configureStore();
@@ -44,7 +46,7 @@ app.use(serverRender());
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-    return res.status(404).json({
+    return res.status(400).json({
         status: 'error',
         message: err.message,
         stack:
@@ -72,11 +74,10 @@ const listen = () =>
     });
 
 const init = () =>
-    db().connect((error) => {
+    connectionPool.getConnection((error, connection) => {
         if (error) {
             switch (error.code) {
-                case 'ECONNREFUSED':
-                case 'ENOENT':
+                default:
                     logError('Error connecting to DB... Retrying in 5 seconds...');
                     setTimeout(init, 5000);
                     break;

@@ -11,13 +11,19 @@ export const dispatchError = (res, error = "There was an error processing your r
 export const dispatchMessage = (res, message) =>
     dispatchResponse(res, 200, message);
 
-export default (req, res) => {
-    const resource = req.params.resource;
-    const action = req.params.action;
-    switch (resource) {
-        case "sources":
-            SourcesApi(action, req, res);
-            return;
-    }
-    dispatchError(res, "Invalid resource.");
+export default (req, res, db) => {
+    db.getConnection((error, connection) => {
+        if (error) {
+            dispatchError(res, "Error with API connection.");
+        } else {
+            const resource = req.params.resource;
+            const action = req.params.action;
+            switch (resource) {
+                case "sources":
+                    SourcesApi(action, req, res, connection);
+                    return;
+            }
+            dispatchError(res, "Invalid resource.");
+        }
+    });
 };

@@ -9,6 +9,7 @@ const FormWrapper = styled.div`
     text-align: center;
     padding: 10px;
     letter-spacing: 1px;
+    line-height: 38px;
 
     select {
         width: auto;

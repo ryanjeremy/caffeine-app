@@ -18,6 +18,11 @@ const Wrapper = styled.div`
         text-align: right;
         font-size: 14px;
         display: block;
+
+        @media (max-width: 992px) {
+            text-align: center;
+            margin-bottom: 15px;
+        }
     }
 `;
 

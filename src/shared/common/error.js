@@ -9,6 +9,9 @@ const Wrapper = styled.div`
     p {
         color: rgb(154, 26, 26);
     }
+    a {
+        font-size: 14px;
+    }
 `;
 
 const Error = ({ error, linkText, linkAction }) => (

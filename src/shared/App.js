@@ -25,6 +25,7 @@ const baseStyles = () => injectGlobal`
     p {
         letter-spacing: 1px;
         font-size: 14px;
+        line-height: 24px;
     }
     a {
         color: rgb(32, 185, 214);
@@ -46,8 +47,14 @@ const Panel = styled.div`
     hr {
         margin-bottom: 0;
     }
+
     .top {
         padding: 25px 25px 0 25px;
+
+        @media (max-width: 992px) {
+            padding-right: 35px;
+            padding-left: 35px;
+        }
     }
 `;
 
