@@ -74,7 +74,7 @@ const listen = () =>
     });
 
 const init = () =>
-    connectionPool.getConnection((error, connection) => {
+    connectionPool.getConnection(error => {
         if (error) {
             switch (error.code) {
                 default:

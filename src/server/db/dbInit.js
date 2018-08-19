@@ -26,6 +26,7 @@ export default (onError, onComplete) => {
                                     onError(insertError);
                                 } else {
                                     onComplete();
+                                    connection.end();
                                 }
                             }
                         );

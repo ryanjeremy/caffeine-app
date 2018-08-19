@@ -1,5 +1,3 @@
-import db from './db';
-
 export const fetchSources = (connection) =>
     new Promise((resolve, reject) => {
         connection.query('SELECT * FROM `sources`', (error, result) => {
